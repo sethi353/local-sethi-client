@@ -43,6 +43,7 @@ export default function MealDetails() {
 
     const review = {
       foodId: id,
+       mealName: meal.foodName,
       reviewerName: user.displayName,
       reviewerImage: user.photoURL,
        reviewerEmail: user.email, 
