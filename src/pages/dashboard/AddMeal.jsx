@@ -139,12 +139,13 @@ const [photoUrl, setPhotoUrl] = useState("");
   };
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Add Meal</h1>
-
+    <div className="flex justify-center items-center min-h-screen bg-base-200">
+      <div className="card w-full max-w-md shadow-xl bg-base-100">
+        <div className="card-body">
+          <h2 className="text-2xl font-bold text-center">Login</h2>
       <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-96">
         <input
-          className="input input-bordered"
+          className="input input-bordered  w-full"
           type="text"
           placeholder="Food Name"
           value={foodName}
@@ -153,7 +154,7 @@ const [photoUrl, setPhotoUrl] = useState("");
         />
 
         <input
-  className="input input-bordered"
+  className="input input-bordered  w-full"
   type="text"
   inputMode="numeric"
   pattern="[0-9]*"
@@ -165,7 +166,7 @@ const [photoUrl, setPhotoUrl] = useState("");
 
 
         <input
-          className="input input-bordered"
+          className="input input-bordered  w-full"
           type="text"
           placeholder="Ingredients (comma separated)"
           value={ingredients}
@@ -174,7 +175,7 @@ const [photoUrl, setPhotoUrl] = useState("");
         />
 
         <input
-  className="input input-bordered"
+  className="input input-bordered  w-full"
   type="number"
   step="1"
   min="0"
@@ -186,7 +187,7 @@ const [photoUrl, setPhotoUrl] = useState("");
 />
 
 <input
-  className="input input-bordered"
+  className="input input-bordered  w-full"
   type="text"
   placeholder="Area (e.g. Mirpur, Dhanmondi)"
   value={area}
@@ -195,7 +196,7 @@ const [photoUrl, setPhotoUrl] = useState("");
 />
 
 <input
-  className="input input-bordered"
+  className="input input-bordered  w-full"
   type="text"
   placeholder="Food Photo URL"
   value={photoUrl}
@@ -210,6 +211,8 @@ const [photoUrl, setPhotoUrl] = useState("");
           Add Meal
         </button>
       </form>
+      </div>
+      </div>
     </div>
   );
 }
