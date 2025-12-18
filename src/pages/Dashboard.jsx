@@ -213,7 +213,7 @@ export default function Dashboard() {
             <button className="btn btn-ghost text-left">🏠 Home</button>
             <button className="btn btn-ghost text-left">📦 My Orders</button>
 
-            <button
+            {/* <button
               className="btn btn-primary mt-4"
               onClick={async () => {
                 await axios.post("http://localhost:5000/role-request", {
@@ -225,7 +225,7 @@ export default function Dashboard() {
               }}
             >
               👨‍🍳 Be a Chef
-            </button>
+            </button> */}
           </div>
         )}
 
@@ -248,6 +248,7 @@ export default function Dashboard() {
         {/* ADMIN MENU */}
         {role === "admin" && (
           <div className="flex flex-col gap-3">
+            <button className="btn btn-ghost text-left">My Profile</button>
             <button
               className="btn btn-ghost text-left"
               onClick={() => navigate("/dashboard/admin-users")}
@@ -259,8 +260,9 @@ export default function Dashboard() {
               className="btn btn-ghost text-left"
               onClick={() => navigate("/dashboard/admin-requests")}
             >
-              ✅ Approve Chefs
+              ✅ Manage Requests
             </button>
+            <button className="btn btn-ghost text-left">Perform Statistics</button>
           </div>
         )}
       </aside>
