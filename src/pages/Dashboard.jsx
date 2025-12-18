@@ -210,8 +210,10 @@ export default function Dashboard() {
         {/* USER MENU */}
         {role === "user" && (
           <div className="flex flex-col gap-3">
-            <button className="btn btn-ghost text-left">🏠 Home</button>
+            <button className="btn btn-ghost text-left">🏠 My Profile</button>
             <button className="btn btn-ghost text-left">📦 My Orders</button>
+            <button className="btn btn-ghost text-left">📦 My Review</button>
+            <button className="btn btn-ghost text-left">📦 My Favourites</button>
 
             {/* <button
               className="btn btn-primary mt-4"
@@ -234,7 +236,7 @@ export default function Dashboard() {
           <div className="flex flex-col gap-3">
             <button className="btn btn-ghost text-left">🍽 My Profile</button>
             <button className="btn btn-ghost text-left">📋 My Meals</button>
-            <button className="btn btn-ghost text-left">🛒 My Orders</button>
+            <button className="btn btn-ghost text-left">🛒  Orders Requests </button>
 
             <button
               className="btn btn-primary mt-4"
