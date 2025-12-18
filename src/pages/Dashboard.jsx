@@ -232,9 +232,9 @@ export default function Dashboard() {
         {/* CHEF MENU */}
         {role === "chef" && (
           <div className="flex flex-col gap-3">
-            <button className="btn btn-ghost text-left">🍽 Chef Home</button>
+            <button className="btn btn-ghost text-left">🍽 My Profile</button>
             <button className="btn btn-ghost text-left">📋 My Meals</button>
-            <button className="btn btn-ghost text-left">🛒 Orders</button>
+            <button className="btn btn-ghost text-left">🛒 My Orders</button>
 
             <button
               className="btn btn-primary mt-4"
