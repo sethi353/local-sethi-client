@@ -107,6 +107,9 @@ export default function AddMeal() {
   const [foodName, setFoodName] = useState("");
   const [price, setPrice] = useState("");
   const [ingredients, setIngredients] = useState("");
+  const [rating, setRating] = useState("");
+const [area, setArea] = useState("");
+const [photoUrl, setPhotoUrl] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -117,13 +120,17 @@ export default function AddMeal() {
     }
 
     const meal = {
-      foodName,
-      price: Number(price),
-      ingredients: ingredients.split(",").map(i => i.trim()),
-      chefName: user.displayName || "Unknown Chef",
-      chefEmail: user.email,
-      createdAt: new Date(),
-    };
+  foodName,
+  price: Number(price),
+  ingredients: ingredients.split(",").map(i => i.trim()),
+  rating: Number(rating),
+  area,
+  photoUrl,
+  chefName: user.displayName || "Unknown Chef",
+  chefEmail: user.email,
+  createdAt: new Date(),
+};
+
 
     await axios.post("http://localhost:5000/meals", meal);
 
@@ -146,13 +153,16 @@ export default function AddMeal() {
         />
 
         <input
-          className="input input-bordered"
-          type="number"
-          placeholder="Price"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          required
-        />
+  className="input input-bordered"
+  type="text"
+  inputMode="numeric"
+  pattern="[0-9]*"
+  placeholder="Price"
+  value={price}
+  onChange={(e) => setPrice(e.target.value)}
+  required
+/>
+
 
         <input
           className="input input-bordered"
@@ -162,6 +172,39 @@ export default function AddMeal() {
           onChange={(e) => setIngredients(e.target.value)}
           required
         />
+
+        <input
+  className="input input-bordered"
+  type="number"
+  step="1"
+  min="0"
+  max="5"
+  placeholder="Rating (0 - 5)"
+  value={rating}
+  onChange={(e) => setRating(e.target.value)}
+  required
+/>
+
+<input
+  className="input input-bordered"
+  type="text"
+  placeholder="Area (e.g. Mirpur, Dhanmondi)"
+  value={area}
+  onChange={(e) => setArea(e.target.value)}
+  required
+/>
+
+<input
+  className="input input-bordered"
+  type="text"
+  placeholder="Food Photo URL"
+  value={photoUrl}
+  onChange={(e) => setPhotoUrl(e.target.value)}
+  required
+/>
+
+
+        
 
         <button className="btn btn-primary mt-2" type="submit">
           Add Meal

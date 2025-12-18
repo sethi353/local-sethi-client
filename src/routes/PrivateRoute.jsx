@@ -13,19 +13,24 @@
 
 // export default PrivateRoute;
 
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 export default function PrivateRoute({ children }) {
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
+  const location = useLocation();
 
-  if (!user) {
-    // Not logged in → redirect to login
-    return <Navigate to="/login" />;
+  // ⏳ wait until Firebase finishes checking auth
+  if (loading) {
+    return <p className="text-center mt-20">Checking authentication...</p>;
   }
 
-  // Logged in → render children
+  // ❌ not logged in
+  if (!user) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  // ✅ logged in
   return children;
 }
-

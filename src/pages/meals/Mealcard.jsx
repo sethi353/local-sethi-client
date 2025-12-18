@@ -16,14 +16,14 @@ export default function MealCard({ meal }) {
 
   return (
     <div className="border rounded p-4">
-      <img src={meal.image} className="h-40 w-full object-cover mb-2" />
+      <img src={meal.photoUrl} className="h-40 w-full object-cover mb-2" />
 
       <h2 className="text-xl font-bold">{meal.foodName}</h2>
       <p>Chef: {meal.chefName}</p>
-      <p>Chef ID: {meal.chefId}</p>
+      <p>Chef ID: {meal.chefEmail}</p>
       <p>Price: ৳{meal.price}</p>
-      <p>Rating: ⭐ {meal.rating || 0}</p>
-      <p>Area: {meal.deliveryArea}</p>
+      <p>Rating: ⭐ {meal.rating ?? 0}</p>
+      <p>Area: {meal.area}</p>
 
       <button
         onClick={handleDetails}
