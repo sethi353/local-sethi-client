@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import AddMeal from "./pages/dashboard/AddMeal";
 import Meals from "./pages/meals/Meals";
 import MealDetails from "./pages/meals/MealDetails";
@@ -39,6 +40,8 @@ function App() {
   }
 />
       </Routes>
+    <Footer />
+
     </BrowserRouter>
   );
 

@@ -1,29 +1,28 @@
-// const Footer = () => {
-//   return (
-//     <footer className="bg-neutral text-neutral-content p-10 mt-20">
-//       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-//         <div>
-//           <h2 className="font-bold text-lg">LocalChefBazaar</h2>
-//           <p>Fresh homemade food by local chefs.</p>
-//         </div>
+import { Link } from "react-router-dom";
 
-//         <div>
-//           <h3 className="font-bold">Contact</h3>
-//           <p>Email: support@localchefbazaar.com</p>
-//           <p>Phone: +880 123456789</p>
-//         </div>
+export default function Footer() {
+  return (
+    <footer className="bg-purple-200 p-6 mt-12">
+      <div className="max-w-6xl mx-auto flex flex-col items-center gap-2 text-center">
+        
+        {/* Logo / Brand */}
+        <div className="text-xl font-bold text-primary">
+          🍽 LocalChefBazaar
+        </div>
 
-//         <div>
-//           <h3 className="font-bold">Working Hours</h3>
-//           <p>Everyday: 8AM - 10PM</p>
-//         </div>
-//       </div>
+        {/* Navigation Links */}
+        <div className="flex flex-col gap-1">
+          <Link to="/" className="hover:underline">Home</Link>
+          <Link to="/meals" className="hover:underline">Meals</Link>
+          <Link to="/dashboard" className="hover:underline">Dashboard</Link>
+          <Link to="/contact" className="hover:underline">Contact</Link>
+        </div>
 
-//       <p className="text-center mt-6">
-//         © {new Date().getFullYear()} LocalChefBazaar. All rights reserved.
-//       </p>
-//     </footer>
-//   );
-// };
-
-// export default Footer;
+        {/* Copyright / Info */}
+        <div className="text-sm text-gray-700 mt-2">
+          &copy; {new Date().getFullYear()} LocalChefBazaar. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  );
+}
