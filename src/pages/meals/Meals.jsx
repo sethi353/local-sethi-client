@@ -105,7 +105,7 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import MealCard from "./MealCard";
+import MealCard from "./Mealcard";
 
 export default function Meals() {
   const [meals, setMeals] = useState([]);
