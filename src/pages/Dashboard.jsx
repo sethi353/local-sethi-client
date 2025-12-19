@@ -236,6 +236,8 @@ export default function Dashboard() {
   const [userReviews, setUserReviews] = useState([]);
   const [userFavorites, setUserFavorites] = useState([]);
   const navigate = useNavigate();
+  const [myMeals, setMyMeals] = useState([]);
+
 
   // Redirect to home if not logged in
   useEffect(() => {
@@ -266,6 +268,21 @@ export default function Dashboard() {
         .catch(err => console.log(err));
     }
   }, [user]);
+
+
+
+
+// Fetch meals when chef clicks “My Meals”
+
+  useEffect(() => {
+  if (user && role === "chef" && activeTab === "meals") {
+    axios
+      .get(`http://localhost:5000/meals/chef/${user.email}`)
+      .then(res => setMyMeals(res.data))
+      .catch(err => console.log(err));
+  }
+}, [user, role, activeTab]);
+
 
   // Delete review
   const handleDeleteReview = async (id) => {
@@ -333,6 +350,71 @@ export default function Dashboard() {
       }
     }
   };
+
+
+
+
+
+  // Delete meal handler
+const handleDeleteMeal = async (id) => {
+  const confirm = await Swal.fire({
+    title: "Delete meal?",
+    text: "This meal will be permanently deleted!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Yes, delete it"
+  });
+
+  if (confirm.isConfirmed) {
+    const res = await axios.delete(`http://localhost:5000/meals/${id}`);
+    if (res.data.success) {
+      setMyMeals(myMeals.filter(meal => meal._id !== id));
+      Swal.fire("Deleted!", "Meal deleted successfully", "success");
+    }
+  }
+};
+
+
+
+
+
+// Update meal handler
+const handleUpdateMeal = async (meal) => {
+  const { value: formValues } = await Swal.fire({
+    title: "Update Meal",
+    html: `
+      <input id="name" class="swal2-input" value="${meal.foodName}">
+      <input id="price" class="swal2-input" type="number" value="${meal.price}">
+      <textarea id="ingredients" class="swal2-textarea">${meal.ingredients}</textarea>
+    `,
+    preConfirm: () => ({
+      foodName: document.getElementById("name").value,
+      price: document.getElementById("price").value,
+      ingredients: document.getElementById("ingredients").value,
+    })
+  });
+
+  if (formValues) {
+    const res = await axios.put(
+      `http://localhost:5000/meals/${meal._id}`,
+      formValues
+    );
+
+    if (res.data.success) {
+      setMyMeals(myMeals.map(m =>
+        m._id === meal._id ? { ...m, ...formValues } : m
+      ));
+      Swal.fire("Updated!", "Meal updated successfully", "success");
+    }
+  }
+};
+
+
+
+
+
+
+
 
   return (
     <div className="min-h-screen flex">
@@ -446,6 +528,56 @@ export default function Dashboard() {
             )}
           </div>
         )}
+
+      
+
+      {/* Render “My Meals” tab */}
+      {activeTab === "meals" && (
+  <div>
+    <h2 className="text-2xl font-bold mb-4">My Meals</h2>
+
+    {myMeals.length === 0 ? (
+      <p>No meals added yet.</p>
+    ) : (
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {myMeals.map(meal => (
+          <div key={meal._id} className="card bg-white shadow-md">
+            <img src={meal.photoUrl} className="h-40 w-full object-cover" />
+
+            <div className="p-4">
+              <h3 className="font-bold">{meal.foodName}</h3>
+              <p>💰 Price: ৳{meal.price}</p>
+              <p>⭐ Rating: {meal.rating || "N/A"}</p>
+              <p>🧂 Ingredients: {meal.ingredients}</p>
+              <p>⏱ Time: {meal.deliveryTime}</p>
+              <p>👨‍🍳 Chef: {meal.chefName}</p>
+
+              <div className="flex gap-2 mt-3">
+                <button
+                  className="btn btn-sm btn-error"
+                  onClick={() => handleDeleteMeal(meal._id)}
+                >
+                  Delete
+                </button>
+
+                <button
+                  className="btn btn-sm btn-warning"
+                  onClick={() => handleUpdateMeal(meal)}
+                >
+                  Update
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+)}
+
+
+
+
       </main>
     </div>
   );
