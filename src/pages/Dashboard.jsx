@@ -313,13 +313,14 @@ const handleUpdateMeal = async (meal) => {
         )}
 
         {/* Favorites Tab */}
-        {activeTab === "favorites" && (
+        {/* {activeTab === "favorites" && (
           <div>
             <h2 className="text-2xl font-bold mb-4">My Favourites</h2>
             {userFavorites.length === 0 ? (
               <p>No favorites yet.</p>
             ) : (
-              <table className="table-auto w-full border-collapse border border-gray-300">
+              <div className="overflow-x-auto">
+              <table className="min-w-[700px] w-full border-collapse border border-gray-300">
                 <thead>
                   <tr className="bg-gray-200">
                     <th className="border px-4 py-2">Meal Name</th>
@@ -343,11 +344,87 @@ const handleUpdateMeal = async (meal) => {
                   ))}
                 </tbody>
               </table>
+              </div>
             )}
           </div>
         )}
 
-      
+       */}
+
+
+      {activeTab === "favorites" && (
+  <div>
+    <h2 className="text-2xl font-bold mb-4">My Favourites</h2>
+
+    {userFavorites.length === 0 ? (
+      <p>No favorites yet.</p>
+    ) : (
+      <>
+        {/* TABLE for medium and large screens */}
+        <div className="hidden md:block overflow-x-auto">
+          <table className="min-w-[700px] w-full border-collapse border border-gray-300">
+            <thead>
+              <tr className="bg-gray-200">
+                <th className="border px-4 py-2">Meal Name</th>
+                <th className="border px-4 py-2">Chef Name</th>
+                <th className="border px-4 py-2">Price</th>
+                <th className="border px-4 py-2">Date Added</th>
+                <th className="border px-4 py-2">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {userFavorites.map(f => (
+                <tr key={f._id}>
+                  <td className="border px-4 py-2">{f.mealName}</td>
+                  <td className="border px-4 py-2">{f.chefName}</td>
+                  <td className="border px-4 py-2">৳{f.price ?? "N/A"}</td>
+                  <td className="border px-4 py-2">{new Date(f.addedTime).toLocaleDateString()}</td>
+                  <td className="border px-4 py-2">
+                    <button
+                      className="btn btn-sm btn-error"
+                      onClick={() => handleDeleteFavorite(f._id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* CARD layout for small screens */}
+        <div className="grid gap-4 md:hidden">
+          {userFavorites.map(f => (
+            <div key={f._id} className="bg-white shadow rounded p-4 flex flex-col justify-between">
+              <div>
+                <h3 className="font-bold text-lg">{f.mealName}</h3>
+                <p className="text-gray-600">Chef: {f.chefName}</p>
+                <p className="text-gray-600">Price: ৳{f.price ?? "N/A"}</p>
+                <p className="text-gray-500 text-sm">Added: {new Date(f.addedTime).toLocaleDateString()}</p>
+              </div>
+              <button
+                className="btn btn-sm btn-error mt-2 w-full"
+                onClick={() => handleDeleteFavorite(f._id)}
+              >
+                Delete
+              </button>
+            </div>
+          ))}
+        </div>
+      </>
+    )}
+  </div>
+)}
+
+
+
+
+
+
+
+
+
 
       {/* Render “My Meals” tab */}
       {activeTab === "meals" && (
