@@ -10,6 +10,8 @@ export default function MealDetails() {
 
   const [meal, setMeal] = useState(null);
   const [reviews, setReviews] = useState([]);
+  const [role, setRole] = useState(null);
+
 
   useEffect(() => {
     if (!id) return;
@@ -19,7 +21,26 @@ export default function MealDetails() {
 
     axios.get(`http://localhost:5000/reviews/${id}`)
       .then(res => setReviews(res.data));
+
+
+   // ✅ FETCH ROLE
+  if (user?.email) {
+    axios
+      .get(`http://localhost:5000/users/${user.email}`)
+      .then(res => setRole(res.data.role));
+  }
+
+
+
   }, [id]);
+
+ 
+
+
+
+
+  
+
 
 
 const handleOrderNow = async () => {
@@ -115,7 +136,7 @@ const handleOrderNow = async () => {
       <div className="flex gap-4 mt-4">
         <button className="btn btn-success"  onClick={handleOrderNow}>Order Now</button>
 
-        {user && (
+        {role === "user" &&  (
           <button onClick={handleFavorite} className="btn btn-outline">
             ❤️ Add to Favorite
           </button>
@@ -146,7 +167,7 @@ const handleOrderNow = async () => {
           </div>
         ))}
 
-        {user && (
+        {role === "user" &&  (
           <form onSubmit={handleReviewSubmit} className="mt-6">
             <input
               type="number"
