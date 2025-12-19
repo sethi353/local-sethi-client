@@ -4,6 +4,8 @@ import { AuthContext } from "../context/AuthContext";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+
 
 
 export default function Dashboard() {
@@ -16,6 +18,15 @@ export default function Dashboard() {
   const [myMeals, setMyMeals] = useState([]);
   const [userOrders, setUserOrders] = useState([]);
 const [chefOrders, setChefOrders] = useState([]);
+const [totalUsers, setTotalUsers] = useState(0);
+const [ordersPending, setOrdersPending] = useState(0);
+const [profile, setProfile] = useState(null);
+
+
+
+
+
+
 // Update order status for chef
 const handleUpdateOrderStatus = async (orderId, status) => {
   try {
@@ -54,6 +65,26 @@ const handleUpdateOrderStatus = async (orderId, status) => {
         .catch(err => console.log(err));
     }
   }, [user]);
+
+
+
+  // Fetch FULL user document for profile
+
+ useEffect(() => {
+  if (user?.email) {
+    axios
+      .get(`http://localhost:5000/users/${user.email}`)
+      .then(res => {
+        setProfile(res.data);
+        setRole(res.data.role); // keep role in sync
+      })
+      .catch(err => console.log(err));
+  }
+}, [user]);
+
+
+
+
 
   // Fetch user reviews and favorites
   useEffect(() => {
@@ -101,6 +132,26 @@ useEffect(() => {
     }
   }
 }, [user, role, activeTab]);
+
+
+
+
+
+// Fetch statistics when admin selects “stats” tab
+useEffect(() => {
+  if (user && role === "admin" && activeTab === "stats") {
+    // Fetch total users
+    axios.get("http://localhost:5000/users/count")
+      .then(res => setTotalUsers(res.data.totalUsers))
+      .catch(err => console.log(err));
+
+    // Fetch pending orders
+    axios.get("http://localhost:5000/orders/pending/count")
+      .then(res => setOrdersPending(res.data.pendingOrders))
+      .catch(err => console.log(err));
+  }
+}, [user, role, activeTab]);
+
 
 
 
@@ -277,8 +328,8 @@ const handleUpdateMeal = async (meal) => {
         {activeTab === "profile" && (
           <div>
             <h2 className="text-2xl font-bold mb-4">My Profile</h2>
-            <p><b>Name:</b> {user?.displayName}</p>
-            <p><b>Email:</b> {user?.email}</p>
+            {/* <p><b>Name:</b> {user?.displayName}</p>
+            <p><b>Email:</b> {user?.email}</p> */}
           </div>
         )}
 
@@ -289,6 +340,43 @@ const handleUpdateMeal = async (meal) => {
             <p>Orders content coming soon...</p>
           </div>
         )} */}
+
+
+
+
+
+      {activeTab === "profile" && profile && (
+  <div className="flex justify-center">
+    <div className="bg-white shadow-lg rounded-xl p-6 w-full max-w-lg">
+
+      <div className="flex items-center gap-4 mb-4">
+        <img
+          src={profile.image || "https://i.ibb.co/2kR5kzp/user.png"}
+          alt="User"
+          className="w-20 h-20 rounded-full object-cover"
+        />
+        <div>
+          <h2 className="text-2xl font-bold">{profile.name}</h2>
+          <p className="text-gray-600">{profile.email}</p>
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <p><b>Role:</b> {profile.role}</p>
+        <p><b>Status:</b> {profile.status || "active"}</p>
+        <p><b>Address:</b> {profile.address || "Not provided"}</p>
+
+        {profile.role === "chef" && (
+          <p><b>Chef ID:</b> {profile.chefId}</p>
+        )}
+      </div>
+    </div>
+  </div>
+)}
+
+
+
+
 
         {/* Reviews Tab */}
         {activeTab === "reviews" && (
@@ -538,6 +626,45 @@ const handleUpdateMeal = async (meal) => {
     )}
   </div>
 )}
+
+
+
+
+{activeTab === "stats" && role === "admin" && (
+  <div>
+    <h2 className="text-2xl font-bold mb-4">Platform Statistics</h2>
+
+    {/* Cards */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+      <div className="p-4 bg-blue-100 rounded shadow">
+        <h3 className="text-xl font-semibold">Total Users</h3>
+        <p className="text-2xl font-bold">{totalUsers}</p>
+      </div>
+      <div className="p-4 bg-yellow-100 rounded shadow">
+        <h3 className="text-xl font-semibold">Orders Pending</h3>
+        <p className="text-2xl font-bold">{ordersPending}</p>
+      </div>
+    </div>
+
+    {/* Bar Chart */}
+    <div className="bg-white p-4 rounded shadow">
+      <h3 className="text-xl font-semibold mb-4">Overview</h3>
+      <ResponsiveContainer width="100%" height={300}>
+        <BarChart data={[
+          { name: "Total Users", value: totalUsers },
+          { name: "Orders Pending", value: ordersPending }
+        ]}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Bar dataKey="value" fill="#4f46e5" />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  </div>
+)}
+
 
 
 

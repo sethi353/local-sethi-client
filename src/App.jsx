@@ -14,10 +14,18 @@ import MealDetails from "./pages/meals/MealDetails";
 import PrivateRoute from "./routes/PrivateRoute";
 import AdminUsers from "./pages/Dashboard/admin/AdminRoleRequests";
 import AdminRoleRequests from "./pages/Dashboard/admin/AdminUsers";
+import LoadingPage from "./components/LoadingPage";
+import ErrorPage from "./components/ErrorPage";
+import { useContext } from "react";
+import { LoadingContext } from "./context/LoadingContext";
+
+
 
 
 
 function App() {
+  const { loading } = useContext(LoadingContext); 
+    if (loading) return <LoadingPage />;
   return (
     <BrowserRouter>
       <Navbar />
@@ -39,6 +47,8 @@ function App() {
     </PrivateRoute>
   }
 />
+{/* catch-all route for unknown pages */}
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     <Footer />
 
