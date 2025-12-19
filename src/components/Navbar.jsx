@@ -69,7 +69,7 @@ export default function Navbar() {
 
   return (
     <nav className="bg-purple-200 p-4">
-      <div className="max-w-6xl mx-auto flex justify-between items-center">
+      <div className="max-w-6xl   px-4  mx-auto flex justify-between items-center">
         {/* Logo */}
         <Link to="/" className="text-xl font-bold text-primary">
           🍽 LocalChefBazaar
@@ -98,7 +98,7 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Hamburger */}
-        <div className="md:hidden flex items-center">
+        <div className="md:hidden flex items-center ">
           <button onClick={() => setIsOpen(!isOpen)} className="btn btn-square btn-ghost">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -119,7 +119,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden mt-2 flex flex-col gap-2 items-center">
+        <div className="md:hidden mt-2 flex flex-col gap-2 items-center w-full px-4">
           <Link to="/" className="btn btn-ghost w-full">Home</Link>
           <Link to="/meals" className="btn btn-ghost w-full">Meals</Link>
           {user && <Link to="/dashboard" className="btn btn-ghost w-full">Dashboard</Link>}

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export default function Footer() {
   return (
     <footer className="bg-purple-200 p-6 mt-12">
-      <div className="max-w-6xl mx-auto flex flex-col items-center gap-2 text-center">
+      <div className="max-w-6xl px-4  mx-auto flex flex-col items-center gap-2 text-center">
         
         {/* Logo / Brand */}
         <div className="text-xl font-bold text-primary">
@@ -11,7 +11,7 @@ export default function Footer() {
         </div>
 
         {/* Navigation Links */}
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1 w-full max-w-xs">
           <Link to="/" className="hover:underline">Home</Link>
           <Link to="/meals" className="hover:underline">Meals</Link>
           <Link to="/dashboard" className="hover:underline">Dashboard</Link>

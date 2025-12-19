@@ -15,7 +15,7 @@ export default function MealCard({ meal }) {
   };
 
   return (
-    <div className="border rounded p-4">
+    <div className="bg-white border rounded-lg shadow-md overflow-hidden w-full flex flex-col">
       <img src={meal.photoUrl} className="h-40 w-full object-cover mb-2" />
 
       <h2 className="text-xl font-bold">{meal.foodName}</h2>

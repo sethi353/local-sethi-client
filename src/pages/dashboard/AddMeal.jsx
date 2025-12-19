@@ -143,7 +143,7 @@ const [photoUrl, setPhotoUrl] = useState("");
       <div className="card w-full max-w-md shadow-xl bg-base-100">
         <div className="card-body">
           <h2 className="text-2xl font-bold text-center">Login</h2>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-96">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-full max-w-md">
         <input
           className="input input-bordered  w-full"
           type="text"
