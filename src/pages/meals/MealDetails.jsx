@@ -21,6 +21,36 @@ export default function MealDetails() {
       .then(res => setReviews(res.data));
   }, [id]);
 
+
+const handleOrderNow = async () => {
+  try {
+    const order = {
+      userEmail: user.email,
+      mealId: meal._id,
+      mealName: meal.foodName,
+      chefEmail: meal.chefEmail,
+      chefName: meal.chefName,
+      price: meal.price,
+      quantity: 1, // You can make it dynamic later
+      userAddress: "User Address Here", // Replace with real address input if you have
+      orderStatus: "pending",
+      paymentStatus: "pending"
+    };
+
+    const res = await axios.post("http://localhost:5000/orders", order);
+
+    if (res.data.insertedId || res.data.acknowledged) {
+      Swal.fire("Success", "Order placed successfully!", "success");
+    }
+  } catch (err) {
+    console.log(err);
+    Swal.fire("Error", "Failed to place order", "error");
+  }
+};
+
+
+  
+
   const handleFavorite = async () => {
     const res = await axios.post("http://localhost:5000/favorites", {
       userEmail: user.email,
@@ -83,7 +113,7 @@ export default function MealDetails() {
       </p>
 
       <div className="flex gap-4 mt-4">
-        <button className="btn btn-success">Order Now</button>
+        <button className="btn btn-success"  onClick={handleOrderNow}>Order Now</button>
 
         {user && (
           <button onClick={handleFavorite} className="btn btn-outline">

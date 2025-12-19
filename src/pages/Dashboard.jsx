@@ -237,6 +237,30 @@ export default function Dashboard() {
   const [userFavorites, setUserFavorites] = useState([]);
   const navigate = useNavigate();
   const [myMeals, setMyMeals] = useState([]);
+  const [userOrders, setUserOrders] = useState([]);
+const [chefOrders, setChefOrders] = useState([]);
+// Update order status for chef
+const handleUpdateOrderStatus = async (orderId, status) => {
+  try {
+    const res = await axios.patch(`http://localhost:5000/orders/${orderId}`, {
+      orderStatus: status
+    });
+
+    if (res.data.modifiedCount || res.data.acknowledged) {
+      Swal.fire("Success", `Order ${status}!`, "success");
+
+      // Update locally
+      setChefOrders(prev =>
+        prev.map(o => (o._id === orderId ? { ...o, orderStatus: status } : o))
+      );
+    }
+  } catch (err) {
+    console.log(err);
+    Swal.fire("Error", "Failed to update order status", "error");
+  }
+};
+
+
 
 
   // Redirect to home if not logged in
@@ -282,6 +306,25 @@ export default function Dashboard() {
       .catch(err => console.log(err));
   }
 }, [user, role, activeTab]);
+
+
+// Fetch orders in a new useEffect
+useEffect(() => {
+  if (user && activeTab === "orders") {
+    if (role === "user") {
+      axios.get(`http://localhost:5000/orders/${user.email}`)
+        .then(res => setUserOrders(res.data))
+        .catch(err => console.log(err));
+    }
+    if (role === "chef") {
+     axios.get(`http://localhost:5000/chef-orders/${user.email}`)
+  .then(res => setChefOrders(res.data))
+
+        .catch(err => console.log(err));
+    }
+  }
+}, [user, role, activeTab]);
+
 
 
   // Delete review
@@ -443,8 +486,8 @@ const handleUpdateMeal = async (meal) => {
         {role === "admin" && (
           <div className="flex flex-col gap-3">
             <button className="btn btn-ghost text-left" onClick={() => setActiveTab("profile")}>My Profile</button>
-            <button className="btn btn-ghost text-left" onClick={() => navigate("/dashboard/admin-users")}>👥 Manage Users</button>
-            <button className="btn btn-ghost text-left" onClick={() => navigate("/dashboard/admin-requests")}>✅ Manage Requests</button>
+            <button className="btn btn-ghost text-left" onClick={() => navigate("/dashboard/admin-users")}>👥 Manage Request</button>
+            <button className="btn btn-ghost text-left" onClick={() => navigate("/dashboard/admin-requests")}>✅ Manage User</button>
             <button className="btn btn-ghost text-left" onClick={() => setActiveTab("stats")}>Perform Statistics</button>
           </div>
         )}
@@ -464,13 +507,13 @@ const handleUpdateMeal = async (meal) => {
           </div>
         )}
 
-        {/* Orders Tab */}
+        {/* Orders Tab
         {activeTab === "orders" && (
           <div>
             <h2 className="text-2xl font-bold mb-4">My Orders</h2>
             <p>Orders content coming soon...</p>
           </div>
-        )}
+        )} */}
 
         {/* Reviews Tab */}
         {activeTab === "reviews" && (
@@ -574,6 +617,76 @@ const handleUpdateMeal = async (meal) => {
     )}
   </div>
 )}
+
+
+
+
+{/* “Orders” tab content */}
+{activeTab === "orders" && role === "user" && (
+  <div>
+    <h2 className="text-2xl font-bold mb-4">My Orders</h2>
+    {userOrders.length === 0 ? (
+      <p>No orders yet.</p>
+    ) : (
+      <div className="grid md:grid-cols-2 gap-4">
+        {userOrders.map(order => (
+          <div key={order._id} className="border p-4 rounded bg-white shadow">
+            <p><b>Meal:</b> {order.mealName}</p>
+            <p><b>Price:</b> ৳{order.price}</p>
+            <p><b>Quantity:</b> {order.quantity}</p>
+            <p><b>Order Status:</b> {order.orderStatus}</p>
+            <p><b>Payment Status:</b> {order.paymentStatus}</p>
+            <p><b>Delivery Address:</b> {order.userAddress}</p>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+)}
+
+{activeTab === "orders" && role === "chef" && (
+  <div>
+    <h2 className="text-2xl font-bold mb-4">Order Requests</h2>
+    {chefOrders.length === 0 ? (
+      <p>No orders yet.</p>
+    ) : (
+      <div className="grid md:grid-cols-2 gap-4">
+        {chefOrders.map(order => (
+          <div key={order._id} className="border p-4 rounded bg-white shadow">
+            <p><b>Meal:</b> {order.mealName}</p>
+            <p><b>Price:</b> ৳{order.price}</p>
+            <p><b>Quantity:</b> {order.quantity}</p>
+            <p><b>User:</b> {order.userEmail}</p>
+            <p><b>Order Status:</b> {order.orderStatus}</p>
+            <p><b>Payment Status:</b> {order.paymentStatus}</p>
+            <p><b>Delivery Address:</b> {order.userAddress}</p>
+
+            <div className="flex gap-2 mt-2">
+              <button
+                className="btn btn-sm btn-error"
+                onClick={() => handleUpdateOrderStatus(order._id, "cancelled")}
+                disabled={order.orderStatus !== "pending"}
+              >Cancel</button>
+
+              <button
+                className="btn btn-sm btn-success"
+                onClick={() => handleUpdateOrderStatus(order._id, "accepted")}
+                disabled={order.orderStatus !== "pending"}
+              >Accept</button>
+
+              <button
+                className="btn btn-sm btn-primary"
+                onClick={() => handleUpdateOrderStatus(order._id, "delivered")}
+                disabled={order.orderStatus !== "accepted"}
+              >Deliver</button>
+            </div>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+)}
+
 
 
 
