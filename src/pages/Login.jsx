@@ -1,36 +1,4 @@
-// import { useContext } from "react";
-// import { useForm } from "react-hook-form";
-// import { AuthContext } from "../context/AuthContext";
-// import Swal from "sweetalert2";
 
-// const Login = () => {
-//   const { loginUser } = useContext(AuthContext);
-//   const { register, handleSubmit } = useForm();
-
-//   const onSubmit = async (data) => {
-//     try {
-//       await loginUser(data.email, data.password);
-//       Swal.fire("Success", "Login successful", "success");
-//     } catch (err) {
-//       Swal.fire("Error", err.message, "error");
-//     }
-//   };
-
-//   return (
-//     <div className="max-w-md mx-auto mt-10">
-//       <form onSubmit={handleSubmit(onSubmit)} className="card p-6 bg-base-100 shadow">
-//         <h2 className="text-2xl font-bold mb-4">Login</h2>
-
-//         <input {...register("email")} placeholder="Email" className="input input-bordered w-full mb-3" />
-//         <input type="password" {...register("password")} placeholder="Password" className="input input-bordered w-full mb-3" />
-
-//         <button className="btn btn-primary w-full">Login</button>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default Login;
 
 
 import { useContext, useState } from "react";
