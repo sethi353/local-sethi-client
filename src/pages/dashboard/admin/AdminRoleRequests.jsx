@@ -11,14 +11,19 @@ export default function AdminRoleRequests() {
       .catch((err) => console.log(err));
   }, []);
 
-  const handleApprove = (id) => {
-    axios
-      .patch(`http://localhost:5000/role-request/${id}`, { requestStatus: "approved" })
-      .then(() => {
-        alert("Request approved!");
-        setRequests((prev) => prev.filter((r) => r._id !== id));
-      });
-  };
+  const handleApprove = (r) => {
+  axios
+    .patch(`http://localhost:5000/role-request/${r._id}`, {
+      requestStatus: "approved",
+      newRole: r.requestType,   // chef or admin
+      userEmail: r.userEmail
+    })
+    .then(() => {
+      alert("Request approved!");
+      setRequests((prev) => prev.filter((req) => req._id !== r._id));
+    });
+};
+
 
   const handleReject = (id) => {
     axios
@@ -44,9 +49,9 @@ export default function AdminRoleRequests() {
           </div>
           <div className="flex gap-2">
             <button
-              className="bg-green-500 text-white px-2 py-1 rounded"
-              onClick={() => handleApprove(r._id)}
-            >
+  className="bg-green-500 text-white px-2 py-1 rounded"
+  onClick={() => handleApprove(r)}
+>
               Approve
             </button>
             <button
