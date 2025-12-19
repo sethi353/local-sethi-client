@@ -65,7 +65,7 @@ useEffect(() => {
     <div>
       {/* Hero Section */}
       <motion.div
-        className="hero min-h-[70vh] bg-base-200"
+        className="hero min-h-[70vh] bg-green-200"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
       >
