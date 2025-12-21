@@ -68,7 +68,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-purple-200 p-4">
+    <nav className="bg-white p-4">
       <div className="max-w-6xl   px-4  mx-auto flex justify-between items-center">
         {/* Logo */}
         <Link to="/" className="text-xl font-bold text-primary">

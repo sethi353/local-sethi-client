@@ -65,11 +65,26 @@ useEffect(() => {
     <div>
       {/* Hero Section */}
       <motion.div
-        className="hero min-h-[70vh] bg-green-200"
+        className="hero min-h-[70vh] relative"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
+        
       >
-        <div className="hero-content text-center flex flex-col items-center gap-6">
+
+    <div
+  className="absolute inset-0 bg-center bg-cover"
+  style={{
+    backgroundImage: `url("https://i.ibb.co.com/RTmn7jLG/download-61.jpg")`,
+    filter: "brightness(50%)",
+  }}
+/>
+
+
+      {/* Dark overlay */}
+  <div className="absolute inset-0   "></div>
+
+
+        <div className="hero-content relative z-10 text-center flex flex-col items-center gap-6 text-white">
           <div>
             <h1 className="text-5xl font-bold">
               Fresh Homemade Meals Near You
