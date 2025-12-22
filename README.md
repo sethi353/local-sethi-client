@@ -1,16 +1,82 @@
-# React + Vite
+LocalChefBazaar
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Project Type: MERN Stack Web Application
+Live URL: https://bucolic-alfajores-6cda44.netlify.app/
 
-Currently, two official plugins are available:
+Project Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+LocalChefBazaar is a modern online marketplace that connects local home cooks with customers seeking fresh, homemade meals. Customers can browse daily menus, place orders, leave reviews, and track their favorite meals. Home cooks can easily create meals, manage orders, and grow their local food business without a physical restaurant.
 
-## React Compiler
+Key Features
+Public Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+User registration and login using Firebase Authentication
 
-## Expanding the ESLint configuration
+Browse daily meals with card layout
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Meal details page with full information and reviews
+
+Favorite meals functionality
+
+Private Features
+User Dashboard
+
+View Profile, Orders, Reviews, and Favorites
+
+Place orders with automatic calculation of total price
+
+Chef Dashboard
+
+Create and manage meals
+
+View and update order requests
+
+Admin Dashboard
+
+Manage Users (mark as fraud)
+
+Manage Chef/Admin requests
+
+View platform statistics (total users, orders, payments)
+
+Other Features
+
+Role-based access control: Admin, Chef, User
+
+Responsive design for mobile devices
+
+Loading and error pages
+
+Dynamic page titles
+
+React-Hook-Form used for all forms
+
+Framer Motion animations on Hero section
+
+Technologies Used
+
+Frontend: React, Tailwind CSS, Framer Motion, React Router, React-Hook-Form
+
+Backend: Node.js, Express.js
+
+Database: MongoDB
+
+Authentication: Firebase Authentication
+
+Deployment: Netlify / Vercel
+
+Installation & Setup
+
+Clone the client and server repositories from GitHub
+
+Create a .env file in both client and server to store Firebase and MongoDB credentials securely
+
+Run the following commands:
+
+cd client
+npm install
+npm run dev
+
+cd server
+npm install
+npm start
