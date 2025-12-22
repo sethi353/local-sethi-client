@@ -20,7 +20,7 @@ const displayedMeals = meals.slice(indexOfFirstMeal, indexOfLastMeal);
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/meals?sort=${sortOrder}`)
+      .get(`https://local-sethi-server.vercel.app/meals?sort=${sortOrder}`)
       .then(res => setMeals(res.data));
   }, [sortOrder]);
 

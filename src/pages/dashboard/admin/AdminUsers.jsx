@@ -6,7 +6,7 @@ export default function AdminUsers() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/users", {
+      .get("https://local-sethi-server.vercel.app/users", {
         // In this version we are not using JWT, so no headers needed
       })
       .then((res) => setUsers(res.data))
@@ -37,7 +37,7 @@ export default function AdminUsers() {
                   className="bg-blue-500 text-white px-2 py-1 rounded mr-2"
                   onClick={() => {
                     axios
-                      .patch(`http://localhost:5000/users/${u._id}`, { role: "chef" })
+                      .patch(`https://local-sethi-server.vercel.app/users/${u._id}`, { role: "chef" })
                       .then(() => {
                         alert("Role updated to chef");
                         setUsers((prev) =>
@@ -54,7 +54,7 @@ export default function AdminUsers() {
                   className="bg-green-500 text-white px-2 py-1 rounded"
                   onClick={() => {
                     axios
-                      .patch(`http://localhost:5000/users/${u._id}`, { role: "admin" })
+                      .patch(`https://local-sethi-server.vercel.app/users/${u._id}`, { role: "admin" })
                       .then(() => {
                         alert("Role updated to admin");
                         setUsers((prev) =>

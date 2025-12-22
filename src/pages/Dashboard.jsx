@@ -30,7 +30,7 @@ const [profile, setProfile] = useState(null);
 // Update order status for chef
 const handleUpdateOrderStatus = async (orderId, status) => {
   try {
-    const res = await axios.patch(`http://localhost:5000/orders/${orderId}`, {
+    const res = await axios.patch(`https://local-sethi-server.vercel.app/orders/${orderId}`, {
       orderStatus: status
     });
 
@@ -60,7 +60,7 @@ const handleUpdateOrderStatus = async (orderId, status) => {
   useEffect(() => {
     if (user) {
       axios
-        .get(`http://localhost:5000/users/${user.email}`)
+        .get(`https://local-sethi-server.vercel.app/users/${user.email}`)
         .then(res => setRole(res.data.role))
         .catch(err => console.log(err));
     }
@@ -73,7 +73,7 @@ const handleUpdateOrderStatus = async (orderId, status) => {
  useEffect(() => {
   if (user?.email) {
     axios
-      .get(`http://localhost:5000/users/${user.email}`)
+      .get(`https://local-sethi-server.vercel.app/users/${user.email}`)
       .then(res => {
         setProfile(res.data);
         setRole(res.data.role); // keep role in sync
@@ -90,12 +90,12 @@ const handleUpdateOrderStatus = async (orderId, status) => {
   useEffect(() => {
     if (user) {
       axios
-        .get(`http://localhost:5000/reviews/user/${user.email}`)
+        .get(`https://local-sethi-server.vercel.app/reviews/user/${user.email}`)
         .then(res => setUserReviews(res.data))
         .catch(err => console.log(err));
 
       axios
-        .get(`http://localhost:5000/favorites/user/${user.email}`)
+        .get(`https://local-sethi-server.vercel.app/favorites/user/${user.email}`)
         .then(res => setUserFavorites(res.data))
         .catch(err => console.log(err));
     }
@@ -109,7 +109,7 @@ const handleUpdateOrderStatus = async (orderId, status) => {
   useEffect(() => {
   if (user && role === "chef" && activeTab === "meals") {
     axios
-      .get(`http://localhost:5000/meals/chef/${user.email}`)
+      .get(`https://local-sethi-server.vercel.app/meals/chef/${user.email}`)
       .then(res => setMyMeals(res.data))
       .catch(err => console.log(err));
   }
@@ -120,12 +120,12 @@ const handleUpdateOrderStatus = async (orderId, status) => {
 useEffect(() => {
   if (user && activeTab === "orders") {
     if (role === "user") {
-      axios.get(`http://localhost:5000/orders/${user.email}`)
+      axios.get(`https://local-sethi-server.vercel.app/orders/${user.email}`)
         .then(res => setUserOrders(res.data))
         .catch(err => console.log(err));
     }
     if (role === "chef") {
-     axios.get(`http://localhost:5000/chef-orders/${user.email}`)
+     axios.get(`https://local-sethi-server.vercel.app/chef-orders/${user.email}`)
   .then(res => setChefOrders(res.data))
 
         .catch(err => console.log(err));
@@ -141,12 +141,12 @@ useEffect(() => {
 useEffect(() => {
   if (user && role === "admin" && activeTab === "stats") {
     // Fetch total users
-    axios.get("http://localhost:5000/users/count")
+    axios.get("https://local-sethi-server.vercel.app/users/count")
       .then(res => setTotalUsers(res.data.totalUsers))
       .catch(err => console.log(err));
 
     // Fetch pending orders
-    axios.get("http://localhost:5000/orders/pending/count")
+    axios.get("https://local-sethi-server.vercel.app/orders/pending/count")
       .then(res => setOrdersPending(res.data.pendingOrders))
       .catch(err => console.log(err));
   }
@@ -168,7 +168,7 @@ useEffect(() => {
     });
 
     if (confirm.isConfirmed) {
-      const res = await axios.delete(`http://localhost:5000/reviews/${id}`);
+      const res = await axios.delete(`https://local-sethi-server.vercel.app/reviews/${id}`);
       if (res.data.success) {
         setUserReviews(userReviews.filter(r => r._id !== id));
         Swal.fire("Deleted!", "Your review has been deleted.", "success");
@@ -193,7 +193,7 @@ useEffect(() => {
     });
 
     if (formValues) {
-      const res = await axios.put(`http://localhost:5000/reviews/${review._id}`, formValues);
+      const res = await axios.put(`https://local-sethi-server.vercel.app/reviews/${review._id}`, formValues);
       if (res.data.success) {
         setUserReviews(userReviews.map(r => r._id === review._id ? { ...r, ...formValues } : r));
         Swal.fire("Updated!", "Your review has been updated.", "success");
@@ -214,7 +214,7 @@ useEffect(() => {
     });
 
     if (confirm.isConfirmed) {
-      const res = await axios.delete(`http://localhost:5000/favorites/${id}`);
+      const res = await axios.delete(`https://local-sethi-server.vercel.app/favorites/${id}`);
       if (res.data.success) {
         setUserFavorites(userFavorites.filter(f => f._id !== id));
         Swal.fire("Removed!", "Meal removed from favorites successfully.", "success");
@@ -237,7 +237,7 @@ const handleDeleteMeal = async (id) => {
   });
 
   if (confirm.isConfirmed) {
-    const res = await axios.delete(`http://localhost:5000/meals/${id}`);
+    const res = await axios.delete(`https://local-sethi-server.vercel.app/meals/${id}`);
     if (res.data.success) {
       setMyMeals(myMeals.filter(meal => meal._id !== id));
       Swal.fire("Deleted!", "Meal deleted successfully", "success");
@@ -267,7 +267,7 @@ const handleUpdateMeal = async (meal) => {
 
   if (formValues) {
     const res = await axios.put(
-      `http://localhost:5000/meals/${meal._id}`,
+      `https://local-sethi-server.vercel.app/meals/${meal._id}`,
       formValues
     );
 

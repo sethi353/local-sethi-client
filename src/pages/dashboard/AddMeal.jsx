@@ -132,7 +132,7 @@ const [photoUrl, setPhotoUrl] = useState("");
 };
 
 
-    await axios.post("http://localhost:5000/meals", meal);
+    await axios.post("https://local-sethi-server.vercel.app/meals", meal);
 
     alert("Meal added successfully!");
     navigate("/dashboard");

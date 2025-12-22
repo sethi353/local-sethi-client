@@ -22,7 +22,7 @@ const [reviews, setReviews] = useState([]);
   useEffect(() => {
     if (user) {
       axios
-        .get(`http://localhost:5000/users/${user.email}`)
+        .get(`https://local-sethi-server.vercel.app/users/${user.email}`)
         .then((res) => setRole(res.data.role))
         .catch((err) => console.log(err));
     }
@@ -34,13 +34,13 @@ const [reviews, setReviews] = useState([]);
 useEffect(() => {
   // Fetch 6 meals for Home page
   axios
-    .get("http://localhost:5000/meals?limit=6&sort=asc")
+    .get("https://local-sethi-server.vercel.app/meals?limit=6&sort=asc")
     .then(res => setDailyMeals(res.data))
     .catch(err => console.log(err));
 
   // Fetch all reviews for Home page
   axios
-    .get("http://localhost:5000/reviews")
+    .get("https://local-sethi-server.vercel.app/reviews")
     .then(res => setReviews(res.data))
     .catch(err => console.log(err));
 }, []);
@@ -53,7 +53,7 @@ useEffect(() => {
 
   const handleRoleRequest = async (type) => {
     if (!user) return alert("You need to log in first!");
-    await axios.post("http://localhost:5000/role-request", {
+    await axios.post("https://local-sethi-server.vercel.app/role-request", {
       userName: user.displayName,
       userEmail: user.email,
       requestType: type,

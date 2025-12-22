@@ -30,7 +30,7 @@ const AuthProvider = ({ children }) => {
     await updateProfile(result.user, { displayName: name, photoURL: image || "" });
 
     // Save to backend
-    await axios.post("http://localhost:5000/users", {
+    await axios.post("https://local-sethi-server.vercel.app/users", {
       name,
       email,
       image: image || "",

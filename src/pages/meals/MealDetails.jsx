@@ -16,17 +16,17 @@ export default function MealDetails() {
   useEffect(() => {
     if (!id) return;
 
-    axios.get(`http://localhost:5000/meals/${id}`)
+    axios.get(`https://local-sethi-server.vercel.app/meals/${id}`)
       .then(res => setMeal(res.data));
 
-    axios.get(`http://localhost:5000/reviews/${id}`)
+    axios.get(`https://local-sethi-server.vercel.app/reviews/${id}`)
       .then(res => setReviews(res.data));
 
 
    // ✅ FETCH ROLE
   if (user?.email) {
     axios
-      .get(`http://localhost:5000/users/${user.email}`)
+      .get(`https://local-sethi-server.vercel.app/users/${user.email}`)
       .then(res => setRole(res.data.role));
   }
 
@@ -58,7 +58,7 @@ const handleOrderNow = async () => {
       paymentStatus: "pending"
     };
 
-    const res = await axios.post("http://localhost:5000/orders", order);
+    const res = await axios.post("https://local-sethi-server.vercel.app/orders", order);
 
     if (res.data.insertedId || res.data.acknowledged) {
       Swal.fire("Success", "Order placed successfully!", "success");
@@ -73,7 +73,7 @@ const handleOrderNow = async () => {
   
 
   const handleFavorite = async () => {
-    const res = await axios.post("http://localhost:5000/favorites", {
+    const res = await axios.post("https://local-sethi-server.vercel.app/favorites", {
       userEmail: user.email,
       mealId: meal._id,
       mealName: meal.foodName,
@@ -102,7 +102,7 @@ const handleOrderNow = async () => {
       comment: e.target.comment.value,
     };
 
-    const res = await axios.post("http://localhost:5000/reviews", review);
+    const res = await axios.post("https://local-sethi-server.vercel.app/reviews", review);
 
     if (res.data.success) {
       Swal.fire("Success", "Review submitted!", "success");

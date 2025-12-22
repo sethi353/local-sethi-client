@@ -6,14 +6,14 @@ export default function AdminRoleRequests() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/role-request") // backend endpoint for requests
+      .get("https://local-sethi-server.vercel.app/role-request") // backend endpoint for requests
       .then((res) => setRequests(res.data))
       .catch((err) => console.log(err));
   }, []);
 
   const handleApprove = (r) => {
   axios
-    .patch(`http://localhost:5000/role-request/${r._id}`, {
+    .patch(`https://local-sethi-server.vercel.app/role-request/${r._id}`, {
       requestStatus: "approved",
       newRole: r.requestType,   // chef or admin
       userEmail: r.userEmail
@@ -27,7 +27,7 @@ export default function AdminRoleRequests() {
 
   const handleReject = (id) => {
     axios
-      .patch(`http://localhost:5000/role-request/${id}`, { requestStatus: "rejected" })
+      .patch(`https://local-sethi-server.vercel.app/role-request/${id}`, { requestStatus: "rejected" })
       .then(() => {
         alert("Request rejected!");
         setRequests((prev) => prev.filter((r) => r._id !== id));
